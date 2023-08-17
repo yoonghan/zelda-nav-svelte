@@ -1,0 +1,12 @@
+
+> zelda-nav-svelte@0.0.0 dev
+> vite
+
+Executing Vite serve in development mode...
+SPA build.
+
+  VITE v4.4.9  ready in 580 ms
+
+  ➜  Local:   http://localhost:5173/nav
+  ➜  Network: use --host to expose
+  ➜  press h to show help
