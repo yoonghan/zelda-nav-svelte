@@ -14,15 +14,15 @@
   import Menu from '@smui/menu';
   import Button from '@smui/button';
   import List, { Item, Separator, Text } from '@smui/list';
+  import { Anchor } from '@smui/menu-surface';
   import { auth$ } from "@walcron/zelda-shared-context";
 
   let mainMenu:Menu, profileMenu:Menu;
-  let clicked = 'nothing yet'; 
-
   let loggedIn = false;
+  let menuAnchor: HTMLDivElement, profileAnchor: HTMLDivElement;
+  let menuAnchorClasses: { [k: string]: boolean } = {}, profileAnchorClasses: { [k: string]: boolean } = {};
 
   auth$.subscribe(({ sessionToken }) => {
-    console.log(sessionToken)
     loggedIn = sessionToken !== null
   });
 
@@ -35,11 +35,30 @@
   >
     <Row>
       <Section>
+        <div 
+        class={Object.keys(menuAnchorClasses).join(' ')}
+        use:Anchor={{
+          addClass: (className) => {
+            if (!menuAnchorClasses[className]) {
+              menuAnchorClasses[className] = true;
+            }
+          },
+          removeClass: (className) => {
+            if (menuAnchorClasses[className]) {
+              delete menuAnchorClasses[className];
+              menuAnchorClasses = menuAnchorClasses;
+            }
+          },
+        }}
+        bind:this={menuAnchor}>
         <IconButton class="material-icons" on:click={() => mainMenu.setOpen(true)}>
           menu
         </IconButton>
         <Title>Walcron Microfrontend(Zelda)</Title>
-        <Menu bind:this={mainMenu}>
+        <Menu 
+        bind:this={mainMenu} 
+        anchor={false}
+        bind:anchorElement={menuAnchor}>
           <List>
             <Item on:SMUI:action={onClick('about')}>
               <Text>About</Text>
@@ -56,21 +75,40 @@
         {#if !loggedIn}
           <Button on:click={onClick('auth/login')}>Login</Button>
         {:else}
-          <IconButton class="material-icons" on:click={() => profileMenu.setOpen(true)}>
-            account_box
-          </IconButton>
-          <Menu bind:this={profileMenu}>
-            <List>
-              <Item on:SMUI:action={onClick('auth/profile')}>
-                <Text>Profile</Text>
-              </Item>
-              {#if loggedIn}
-              <Item on:SMUI:action={onClick('auth/logout')}>
-                <Text>Logout</Text>
-              </Item>
-              {/if}
-            </List>
-          </Menu>
+          <div 
+          class={Object.keys(profileAnchorClasses).join(' ')}
+          use:Anchor={{
+            addClass: (className) => {
+              if (!profileAnchorClasses[className]) {
+                profileAnchorClasses[className] = true;
+              }
+            },
+            removeClass: (className) => {
+              if (profileAnchorClasses[className]) {
+                delete profileAnchorClasses[className];
+                profileAnchorClasses = profileAnchorClasses;
+              }
+            },
+          }}
+          bind:this={profileAnchor}>
+            <IconButton class="material-icons" on:click={() => profileMenu.setOpen(true)}>
+              account_box
+            </IconButton>
+            <Menu 
+            bind:this={profileMenu}
+            anchor={false}
+            bind:anchorElement={profileAnchor}>
+              <List>
+                <Item on:SMUI:action={onClick('auth/profile')}>
+                  <Text>Profile</Text>
+                </Item>
+                <Separator/>
+                <Item on:SMUI:action={onClick('auth/logout')}>
+                  <Text>Logout</Text>
+                </Item>
+              </List>
+            </Menu>
+          </div>
         {/if}
       </Section>
     </Row>
