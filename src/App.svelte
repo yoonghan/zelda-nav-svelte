@@ -15,14 +15,13 @@
   import Button from '@smui/button';
   import List, { Item, Separator, Text } from '@smui/list';
   import { auth$ } from "@walcron/zelda-shared-context";
+  import Separator from '@smui/list/src/Separator.svelte';
 
   let mainMenu:Menu, profileMenu:Menu;
-  let clicked = 'nothing yet'; 
 
   let loggedIn = false;
 
   auth$.subscribe(({ sessionToken }) => {
-    console.log(sessionToken)
     loggedIn = sessionToken !== null
   });
 
@@ -64,11 +63,10 @@
               <Item on:SMUI:action={onClick('auth/profile')}>
                 <Text>Profile</Text>
               </Item>
-              {#if loggedIn}
+              <Separator/>
               <Item on:SMUI:action={onClick('auth/logout')}>
                 <Text>Logout</Text>
               </Item>
-              {/if}
             </List>
           </Menu>
         {/if}
