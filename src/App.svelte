@@ -75,5 +75,3 @@
       </Section>
     </Row>
   </TopAppBar>
-
-<pre class="status">Clicked: {clicked}</pre>
