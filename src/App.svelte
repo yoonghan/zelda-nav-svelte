@@ -15,7 +15,6 @@
   import Button from '@smui/button';
   import List, { Item, Separator, Text } from '@smui/list';
   import { auth$ } from "@walcron/zelda-shared-context";
-  import Separator from '@smui/list/src/Separator.svelte';
 
   let mainMenu:Menu, profileMenu:Menu;
 
