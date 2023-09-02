@@ -54,7 +54,7 @@
         <IconButton class="material-icons" on:click={() => mainMenu.setOpen(true)}>
           menu
         </IconButton>
-        <Title>Walcron Microfrontend(Zelda)</Title>
+        <Title>Walcron Dashboard</Title>
         <Menu 
         bind:this={mainMenu} 
         anchor={false}
