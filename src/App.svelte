@@ -15,16 +15,16 @@
   import Button from '@smui/button';
   import List, { Item, Separator, Text } from '@smui/list';
   import { Anchor } from '@smui/menu-surface';
-  import { auth$ } from "@walcron/zelda-shared-context";
+  //import { auth$ } from "@walcron/zelda-shared-context";
 
   let mainMenu:Menu, profileMenu:Menu;
   let loggedIn = false;
   let menuAnchor: HTMLDivElement, profileAnchor: HTMLDivElement;
   let menuAnchorClasses: { [k: string]: boolean } = {}, profileAnchorClasses: { [k: string]: boolean } = {};
 
-  auth$.subscribe(({ sessionToken }) => {
-    loggedIn = sessionToken !== null
-  });
+  // auth$.subscribe(({ sessionToken }) => {
+  //   loggedIn = sessionToken !== null
+  // });
 
   const onClick = (location: string) => () => {
     window.location.href = `/${location}`
@@ -35,6 +35,9 @@
   >
     <Row>
       <Section>
+        <IconButton class="material-icons" on:click={() => mainMenu.setOpen(true)}>
+          menu
+        </IconButton>
         <div 
         class={Object.keys(menuAnchorClasses).join(' ')}
         use:Anchor={{
@@ -51,10 +54,7 @@
           },
         }}
         bind:this={menuAnchor}>
-        <IconButton class="material-icons" on:click={() => mainMenu.setOpen(true)}>
-          menu
-        </IconButton>
-        <Title>Walcron Dashboard</Title>
+        <Title on:click={onClick('')} class={'pointer'}>Walcron Dashboard</Title>
         <Menu 
         bind:this={mainMenu} 
         anchor={false}
