@@ -17,6 +17,10 @@
   width: 100vw;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 body {
   margin: 0;
   display: flex;
