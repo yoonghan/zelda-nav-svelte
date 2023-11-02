@@ -3,35 +3,40 @@ export class Firebase {
     static getFirebaseInitializeApp: () => import("@firebase/app").FirebaseApp;
     static getAuth: () => import("firebase/auth").Auth;
 }
-export const credentials: {
-    username: string;
-    password: string;
-};
-/// <reference types="jest" />
-export const mockAuth: jest.Mock<any, any, any>;
 import { BehaviorSubject } from 'rxjs';
-interface AuthProps {
+import { AuthResponse, AuthWithProfileResponse } from './type/Auth';
+import { ChangePasswordResponse, EmailPasswordResetResponse } from './type/ChangePassword';
+import { RemoveUser } from './type/RemoveUser';
+export const SESSION_KEY = "sessionToken";
+export declare const DISPLAYNAME_KEY = "sessionToken";
+export declare const auth$: BehaviorSubject<AuthResponse>;
+export declare function create(username: string, password: string, displayName?: string): Promise<AuthWithProfileResponse>;
+export declare function login(username: string, password: string): Promise<AuthResponse>;
+export declare function confirmPasswordResetEmail(code: string, newPassword: string): Promise<ChangePasswordResponse>;
+export declare function resetEmail(username: string, redirectUrl: string): Promise<EmailPasswordResetResponse>;
+export declare function changePassword(oldPassword: string, newPassword: string): Promise<ChangePasswordResponse>;
+export declare function logout(): Promise<void>;
+export declare const updateUserLogin: (user: any) => void;
+export declare function removeUser(): Promise<RemoveUser>;
+export interface AuthResponse {
     sessionToken: string | null;
+    displayName: string;
     error: string | undefined;
     pending: boolean;
 }
-interface AuthPropsWithProfile extends AuthProps {
+export interface AuthWithProfileResponse extends AuthResponse {
     isProfileUpdated: boolean;
 }
-type ChangePasswordProps = {
+export type ChangePasswordResponse = {
     isChanged: boolean;
     error: string | undefined;
 };
-export const SESSION_KEY = "sessionToken";
-export declare const auth$: BehaviorSubject<AuthProps>;
-export declare function create(username: string, password: string, displayName?: string): Promise<AuthPropsWithProfile>;
-export declare function login(username: string, password: string): Promise<AuthProps>;
-export declare function confirmPasswordResetEmail(code: string, newPassword: string): Promise<ChangePasswordProps>;
-export declare function resetEmail(username: string, redirectUrl: string): Promise<ChangePasswordProps>;
-export declare function changePassword(oldPassword: string, newPassword: string): Promise<ChangePasswordProps>;
-export declare function logout(): Promise<void>;
-export {};
-import './__custom_mocks__/firebase/auth';
-import 'whatwg-fetch';
-export {};
+export type EmailPasswordResetResponse = {
+    isSent: boolean;
+    error: string | undefined;
+};
+export type RemoveUser = {
+    isRemoved: boolean;
+    error?: string;
+};
 }
