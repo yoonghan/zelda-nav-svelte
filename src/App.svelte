@@ -19,7 +19,7 @@
   import { auth$ } from "@walcron/zelda-shared-context";
 
   let mainMenu:Menu, profileMenu:Menu;
-  let loggedIn = false;
+  let loggedIn = true;
   let menuAnchor: HTMLDivElement, profileAnchor: HTMLDivElement;
   let menuAnchorClasses: { [k: string]: boolean } = {}, profileAnchorClasses: { [k: string]: boolean } = {};
 
@@ -68,6 +68,10 @@
             <Item on:SMUI:action={onClick('chart')}>
               <Text>Chart</Text>
             </Item>
+            <Separator/>
+            <Item on:SMUI:action={onClick('auth/logou')}>
+              <Text>Sign off</Text>
+            </Item>
             {/if}
           </List>
         </Menu>
@@ -76,40 +80,9 @@
         {#if !loggedIn}
           <Button on:click={onClick('auth/login')}>Login</Button>
         {:else}
-          <div 
-          class={Object.keys(profileAnchorClasses).join(' ')}
-          use:Anchor={{
-            addClass: (className) => {
-              if (!profileAnchorClasses[className]) {
-                profileAnchorClasses[className] = true;
-              }
-            },
-            removeClass: (className) => {
-              if (profileAnchorClasses[className]) {
-                delete profileAnchorClasses[className];
-                profileAnchorClasses = profileAnchorClasses;
-              }
-            },
-          }}
-          bind:this={profileAnchor}>
-            <IconButton class="material-icons" on:click={() => profileMenu.setOpen(true)}>
-              account_box
-            </IconButton>
-            <Menu 
-            bind:this={profileMenu}
-            anchor={false}
-            bind:anchorElement={profileAnchor}>
-              <List>
-                <Item on:SMUI:action={onClick('auth/profile')}>
-                  <Text>Profile</Text>
-                </Item>
-                <Separator/>
-                <Item on:SMUI:action={onClick('auth/logout')}>
-                  <Text>Logout</Text>
-                </Item>
-              </List>
-            </Menu>
-          </div>
+        <IconButton class="material-icons" on:click={onClick('auth/profile')}>
+          account_box
+        </IconButton>
         {/if}
       </Section>
     </Row>
