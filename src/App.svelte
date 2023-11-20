@@ -18,10 +18,10 @@
   import './nav.css'
   import { auth$ } from "@walcron/zelda-shared-context";
 
-  let mainMenu:Menu, profileMenu:Menu;
+  let mainMenu:Menu;
   let loggedIn = true;
-  let menuAnchor: HTMLDivElement, profileAnchor: HTMLDivElement;
-  let menuAnchorClasses: { [k: string]: boolean } = {}, profileAnchorClasses: { [k: string]: boolean } = {};
+  let menuAnchor: HTMLDivElement;
+  let menuAnchorClasses: { [k: string]: boolean } = {};
 
   auth$.subscribe(({ sessionToken }) => {
     loggedIn = sessionToken !== null
@@ -69,7 +69,10 @@
               <Text>Chart</Text>
             </Item>
             <Separator/>
-            <Item on:SMUI:action={onClick('auth/logou')}>
+            <Item on:SMUI:action={onClick('auth/profile')}>
+              <Text>Profile</Text>
+            </Item>
+            <Item on:SMUI:action={onClick('auth/logout')}>
               <Text>Sign off</Text>
             </Item>
             {/if}
@@ -79,10 +82,6 @@
       <Section align="end" toolbar>
         {#if !loggedIn}
           <Button on:click={onClick('auth/login')}>Login</Button>
-        {:else}
-        <IconButton class="material-icons" on:click={onClick('auth/profile')}>
-          account_box
-        </IconButton>
         {/if}
       </Section>
     </Row>
