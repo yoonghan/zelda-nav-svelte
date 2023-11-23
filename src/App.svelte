@@ -8,6 +8,11 @@
   href="https://fonts.googleapis.com/css2?family=Material+Icons&Roboto+Mono:ital@0;1&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
   rel="stylesheet"
 />
+<style>
+a {
+  color: white;
+  text-decoration: none; 
+}</style>
 <script lang="ts">
   import TopAppBar, { Row, Section, Title } from '@smui/top-app-bar';
   import IconButton from '@smui/icon-button';
@@ -55,33 +60,37 @@
           },
         }}
         bind:this={menuAnchor}>
-        <Title on:click={onClick('')} class={'pointer'}>Walcron Dashboard</Title>
-        <Menu 
-        bind:this={mainMenu} 
-        anchor={false}
-        bind:anchorElement={menuAnchor}>
-          <List>
-            <Item on:SMUI:action={onClick('about')}>
-              <Text>About</Text>
-            </Item>
-            {#if loggedIn}
-            <Item on:SMUI:action={onClick('chart')}>
-              <Text>Chart</Text>
-            </Item>
-            <Separator/>
-            <Item on:SMUI:action={onClick('auth/profile')}>
-              <Text>Profile</Text>
-            </Item>
-            <Item on:SMUI:action={onClick('auth/logout')}>
-              <Text>Sign off</Text>
-            </Item>
-            {/if}
-          </List>
-        </Menu>
+        <Title><a href="/">Walcron Dashboard</a></Title>
+        <nav>
+          <Menu 
+          bind:this={mainMenu} 
+          anchor={false}
+          bind:anchorElement={menuAnchor}>
+              <List>
+                <Item on:SMUI:action={onClick('about')}>
+                  <Text>About</Text>
+                </Item>
+                {#if loggedIn}
+                <Item on:SMUI:action={onClick('chart')}>
+                  <Text>Chart</Text>
+                </Item>
+                <Separator/>
+                <Item on:SMUI:action={onClick('auth/profile')}>
+                  <Text>Profile</Text>
+                </Item>
+                <Item on:SMUI:action={onClick('auth/logout')}>
+                  <Text>Sign off</Text>
+                </Item>
+                {/if}
+              </List>
+          </Menu>
+        </nav>
       </Section>
       <Section align="end">
         {#if !loggedIn}
-          <Button on:click={onClick('auth/login')}>Login</Button>
+          <nav>
+            <Button on:click={onClick('auth/login')}>Login</Button>
+          </nav>
         {/if}
       </Section>
     </Row>
