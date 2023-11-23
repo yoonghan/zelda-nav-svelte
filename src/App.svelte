@@ -79,7 +79,7 @@
           </List>
         </Menu>
       </Section>
-      <Section align="end" toolbar>
+      <Section align="end">
         {#if !loggedIn}
           <Button on:click={onClick('auth/login')}>Login</Button>
         {/if}
